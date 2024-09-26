@@ -45,8 +45,10 @@ GameObject:
   - component: {fileID: 4797690262140317339}
   - component: {fileID: 302733042894723199}
   - component: {fileID: 2580414013151353536}
-  - component: {fileID: 6452855315776804872}
   - component: {fileID: 3320890362594388745}
+  - component: {fileID: 277438987084434683}
+  - component: {fileID: 337125836968605306}
+  - component: {fileID: 1862997330969448765}
   m_Layer: 0
   m_Name: piano
   m_TagString: Untagged
@@ -134,6 +136,7 @@ MonoBehaviour:
   hoverMaterial: {fileID: 0}
   selectMaterial: {fileID: 0}
   _SimulationManager: {fileID: 0}
+  menuManager: {fileID: 0}
   interactionEnabled: 0
 --- !u!114 &302733042894723199
 MonoBehaviour:
@@ -150,7 +153,9 @@ MonoBehaviour:
   type: piano
   simulation: 0
   isWalking: 0
+  walkMode: 1
   nearObjects: []
+  charAnim: {fileID: 0}
   loadedObject: 0
   lastAction: 
   lastTimeAction: 0
@@ -177,7 +182,23 @@ MonoBehaviour:
   animator: {fileID: 0}
   surname: 
   nearObjs: []
---- !u!114 &6452855315776804872
+--- !u!208 &3320890362594388745
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6683974226756806044}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.2}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1, y: 0, z: -0.15}
+  m_TimeToStationary: 0.5
+--- !u!114 &277438987084434683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,7 +207,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6683974226756806044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PermittedDisplacementAxes: -1
+  m_ConstrainedAxisDisplacementMode: 1
+  m_TwoHandedRotationMode: 1
+  m_AllowOneHandedScaling: 1
+  m_AllowTwoHandedScaling: 0
+  m_OneHandedScaleSpeed: 0.5
+  m_ThresholdMoveRatioForScale: 0.05
+  m_ClampScaling: 1
+  m_MinimumScaleRatio: 0.25
+  m_MaximumScaleRatio: 2
+  m_ScaleMultiplier: 0.25
+--- !u!114 &337125836968605306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6683974226756806044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9a624916da849cc952ff352677a17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -275,36 +319,27 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 0
+  m_SmoothPosition: 1
   m_SmoothPositionAmount: 8
   m_TightenPosition: 0.1
   m_TrackRotation: 1
-  m_SmoothRotation: 0
+  m_SmoothRotation: 1
   m_SmoothRotationAmount: 8
   m_TightenRotation: 0.1
   m_TrackScale: 1
-  m_SmoothScale: 0
-  m_SmoothScaleAmount: 8
-  m_TightenScale: 0.1
+  m_SmoothScale: 1
+  m_SmoothScaleAmount: 0.8
+  m_TightenScale: 0.4
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -312,30 +347,33 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ThrowVelocityScale: 1
+  m_ThrowVelocityScale: 1.5
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 1
---- !u!208 &3320890362594388745
-NavMeshObstacle:
+  m_FarAttachMode: 2
+  planeManager: {fileID: 0}
+  snapDistanceThreshold: 1.5
+--- !u!114 &1862997330969448765
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6683974226756806044}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.2}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -1, y: 0, z: -0.15}
-  m_TimeToStationary: 0.5
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d30c7e592f141acb9c27861b359e9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMaterial: {fileID: 0}
+  selectMaterial: {fileID: 0}
+  _SimulationManager: {fileID: 0}
+  menuManager: {fileID: 0}
+  interactionEnabled: 0
 --- !u!1001 &332145839059781570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -482,7 +520,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7552724756050822516, guid: 0c1b4201361e7dd47a71e8fe9394f1a0, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 7b16dbe083494ed46835ec14f97d806b, type: 2}
     - target: {fileID: 919132149155446097, guid: 0c1b4201361e7dd47a71e8fe9394f1a0, type: 3}

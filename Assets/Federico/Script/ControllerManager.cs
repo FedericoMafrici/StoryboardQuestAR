@@ -69,7 +69,7 @@ public class ControllerManager : MonoBehaviour
         lr = rightXRController.GetComponent<LineRenderer>();
         lr.enabled = !lr.enabled;
 
-        StartCoroutine(CaptureScreenshot());  // Avvia la coroutine per lo screenshot
+      //  StartCoroutine(CaptureScreenshot());  // Avvia la coroutine per lo screenshot
     }
 
     private IEnumerator CaptureScreenshot()
@@ -130,42 +130,7 @@ public class ControllerManager : MonoBehaviour
                   }
         private void Update()
             {
-                if (!possibleInteraction)
-                {
-                    return;
-                }
-                // Verifica che entrambi i controller siano presenti
-                if (firstInteractor != null && secondInteractor != null)
-                {
-                    Debug.Log("First Interactor: " + firstInteractor.transform.position);
-                    Debug.Log("Second Interactor: " + secondInteractor.transform.position);
-        
-                    // Ottieni la posizione dei controller
-                    Vector3 leftControllerPosition = leftXRController.transform.position;
-                    Vector3 rightControllerPosition = rightXRController.transform.position;
-        
-                    Debug.Log("Left Controller Position: " + leftControllerPosition);
-                    Debug.Log("Right Controller Position: " + rightControllerPosition);
-        
-                    // Calcola la distanza attuale tra i due controller
-                    float currentDistance = Vector3.Distance(leftControllerPosition, rightControllerPosition);
-                    Debug.Log($"Current Distance: {currentDistance}");
-        
-                    // Calcola il fattore di scala basato sulla distanza
-                    float scaleMultiplier = currentDistance / initialDistance;
-                    currentScale = initialScale * scaleMultiplier;
-                    Debug.Log("Current scale: " + currentScale);
-        
-                    // Applica la nuova scala all'oggetto selezionato durante la manipolazione
-                    if (currSelectedObject != null)
-                    {
-                        currSelectedObject.transform.localScale = currentScale;
-                    }
-                    else
-                    {
-                        Debug.Log("oggetto nullo aggiornamento scala non eseguito");
-                    }
-                }
+             
             }
            
     private void OnSelectEntered(SelectEnterEventArgs args)

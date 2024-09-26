@@ -742,17 +742,21 @@ public void ToggleTutorial()
                 // non so cosa faccia l'instruzione sotto scoprilo 
                 characterAnimationManager.GetComponent<AnimaPersonaggio>().SetCharacter(obj); 
                 // abilita in modo il pulsante di get Control per far diventare quel personaggio il principale 
-               GetControlButton.SetActive(true);
+              GetControlButton.SetActive(true);
                
             }
             else
             {
                 if (obj.CompareTag("Player"))
                 {
-                    activeCharacter = obj.transform.GetChild(1).gameObject;
+                    activeCharacter = obj.transform.GetChild(0).gameObject;
+                    characterAnimationManager.GetComponent<AnimaPersonaggio>().SetCharacter(obj.transform.GetChild(0).gameObject);
                 }
-                
-                characterAnimationManager.GetComponent<AnimaPersonaggio>().SetCharacter(obj.transform.GetChild(1).gameObject);
+                else
+                {
+                    characterAnimationManager.GetComponent<AnimaPersonaggio>().SetCharacter(obj.gameObject);
+                }
+               
                 
                 // GetControlButton.SetActive(false);
                 if (activeCharacter != null && activeCharacter.GetComponent<Animator>() != null)
@@ -762,7 +766,7 @@ public void ToggleTutorial()
                     CreateParticleActive(activeCharacter);
                 }
                 //sfondoTitolo.SetActive(false);
-             //   animaPersonaggio.PosizioneTasti();
+                //animaPersonaggio.PosizioneTasti();
 
             }
 

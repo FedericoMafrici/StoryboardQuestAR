@@ -111,7 +111,10 @@ public class AnimaPersonaggio : MonoBehaviour
             Debug.LogError("ui del personaggio non trovata personaggio: "+ this.gameObject.name);
         }
         ui.SetActive(true);
-       
+        var tmp = ui.transform.Find("Front");
+        ui= _simulationManager.activeCharacter.transform.parent.Find("PersonaggioAttivo").gameObject;
+        ui.SetActive(true);
+        
         var container = ui.transform.Find("Front/Scrollview Canvas/Panel/Pannello/Viewport/Content");
         if (container == null)
         {
@@ -134,44 +137,13 @@ public class AnimaPersonaggio : MonoBehaviour
             return;
 
           var newElement= CreateElement(s,container);
-            // TODO possibilità di cambiare colore in base ai bottoni ma si vee dopo 
+          
+            // TODO possibilità di cambiare colore in base ai bottoni ma si vede dopo 
         }
         
     }
     
     
-    
-    /*
-     * ABILITA LA USER INTERFACE DELL'OGGETTO
-     */
-    public void ShowActions()
-    {
-        // abilita la UI
-        var ui = _simulationManager.activeCharacter.transform.Find("ActiveCharacterHandle").gameObject;
-        ui.SetActive(true);
-        ui = _simulationManager.activeCharacter.transform.Find("Front").gameObject;
-        ui.SetActive(true);
-        
-        _selectedActionsList =
-            _actionsDB.ReturnActions(_simulationManager.activeCharacter.GetComponent<CharacterManager>().type,_character.GetComponent<CharacterManager>().type,
-                _character.GetComponent<State>().state, _self);
-        
-        // updateUI 
-        // clear dei contenuti precedenti
-        var container = ui.transform.Find("Scrollview Canvas/Panel/Pannello/Viewport/Content").transform;
-        ClearContainer(container);
-        // update dei contenuti 
-        foreach (string s in _selectedActionsList)
-        {
-            if( s==null)
-                return;
-
-            var newElement= CreateElement(s,container);
-            // TODO possibilità di cambiare colore in base ai bottoni ma si vee dopo 
-        }
-        
-    }
-
 
     // Funzione per pulire il container
     private void ClearContainer(Transform container)
@@ -201,6 +173,44 @@ public class AnimaPersonaggio : MonoBehaviour
 
         return newElement;
     }
+    
+    /*
+     * ABILITA LA USER INTERFACE DELL'OGGETTO
+     */
+    public void ShowActions()
+    {
+        // abilita la UI
+        var ui =  _simulationManager.activeCharacter.transform.parent.Find("CharacterUI").gameObject;
+        if (ui == null)
+        {
+            Debug.LogError("ui del personaggio non trovata personaggio: "+ this.gameObject.name);
+        }
+        ui.SetActive(true);
+        var tmp = ui.transform.Find("Front");
+        ui.transform.localPosition = new Vector3(2.78f, -0.78f, 1.07f);
+        ui= _simulationManager.activeCharacter.transform.parent.Find("PersonaggioAttivo").gameObject;
+        ui.SetActive(true);
+        var container = ui.transform.Find("Front/Scrollview Canvas/Panel/Pannello/Viewport/Content");
+        if (container == null)
+        {
+            Debug.LogError("Null reference exception nella gestione della ui dell'oggetto " + _character.name);
+        }
+        _selectedActionsList =
+            _actionsDB.ReturnActions(_simulationManager.activeCharacter.GetComponent<CharacterManager>().type,_character.GetComponent<CharacterManager>().type,
+                _character.GetComponent<State>().state, _self);
+        ClearContainer(container);
+        // update dei contenuti 
+        foreach (string s in _selectedActionsList)
+        {
+            if( s==null)
+                return;
+
+            var newElement= CreateElement(s,container);
+            // TODO possibilità di cambiare colore in base ai bottoni ma si vee dopo 
+        }
+        
+    }
+
     
       public void StopOldLongAnimation()
     {
