@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 324986747280638563}
   - component: {fileID: 2687888719301980589}
   m_Layer: 0
-  m_Name: BoundingBox
+  m_Name: BoundingBox2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3508348494270127559}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fede4934f2594da19e45283d89355e5a, type: 3}
   m_Name: 
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3508348494270127559}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85930dc0db2084a4d9588d98a3278c13, type: 3}
   m_Name: 

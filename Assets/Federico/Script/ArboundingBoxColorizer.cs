@@ -43,10 +43,10 @@ public class ArboundingBoxColorizer : MonoBehaviour
 
   public void UpdateBoxColor(ARTrackablesChangedEventArgs<ARBoundingBox> b)
     {
-
+        
         Color boxMatColor = GetColorByClassification(_boundingBox.classifications);
-    //boxMatColor.a = 0.0f;
-    _meshRenderer.material.color = boxMatColor;
+        boxMatColor.a = 0.0f;
+        _meshRenderer.material.color = boxMatColor;
  //   _console.SetText("ho fatto partire la update box color: valore del meshrender:"+_meshRenderer.transform.localScale.ToString());
     
     }
@@ -56,7 +56,7 @@ public class ArboundingBoxColorizer : MonoBehaviour
     {
         if (_meshRenderer != null)
         {
-            _meshRenderer. transform. localScale = _boundingBox.size;
+            _meshRenderer.transform.localScale = _boundingBox.size;
         }
         else
         {

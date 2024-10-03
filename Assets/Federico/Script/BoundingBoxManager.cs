@@ -3,14 +3,19 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.OpenXR.Features.Meta;
 using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit.Attachment;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
 public class BoundingBoxManager : MonoBehaviour
 {
     // Material da assegnare alle bounding box
     public Material boundingBoxMaterial;
-
+    public ConsoleDebugger _debuggingWindow;
+    public GameObject _boundingBoxPrefab;
     // Lista delle bounding box rilevate
     private List<ARBoundingBox> boundingBoxes = new List<ARBoundingBox>();
+    
     [SerializeField] private ARBoundingBoxManager bbManager; // Databa
     void Start()
     {
@@ -36,7 +41,20 @@ public class BoundingBoxManager : MonoBehaviour
       }
       bbManager.trackablesChanged.AddListener(OnTrackablesChanged);
     }
+    public void CreateCubeFromBoundingBox(ARBoundingBox boundingBox)
+    {
+        Debug.Log("cubo instanziato");
+        _debuggingWindow.SetText("cubo instanziato per coprire la bounding box");
+        // Crea un nuovo GameObject come cubo
+        GameObject cube = GameObject.Instantiate(_boundingBoxPrefab);
+        cube.transform.localScale = boundingBox.GetComponent<Collider>().bounds.size;
 
+        // Imposta la posizione del cubo uguale a quella della bounding box
+        cube.transform.position = boundingBox.transform.position;
+        cube.transform.rotation = boundingBox.transform.rotation;
+        
+    }
+    
     void OnDestroy()
     {
         // Rimozione dell'evento
@@ -46,8 +64,24 @@ public class BoundingBoxManager : MonoBehaviour
     // Funzione chiamata quando viene rilevata una bounding box
     private void OnBoundingBoxDetected(ARBoundingBox box)
     {
-        boundingBoxes.Add(box);
-        ApplyMaterialToBoundingBox(box);
+       CreateCubeFromBoundingBox(box);
+       bbManager.enabled = false;
+       bbManager.gameObject.SetActive(false);
+    }
+
+    private void configureBbox(SnapToPlane bbox)
+    {
+        bbox.smoothScale = true;
+        bbox.trackScale = true;
+        bbox.trackPosition = true;
+        bbox.smoothPosition = true;
+        bbox.trackRotation = true;
+        bbox.smoothScale = true;
+        bbox.farAttachMode = InteractableFarAttachMode.Far;
+        bbox.useDynamicAttach = true;
+        bbox.matchAttachPosition = true;
+        bbox.matchAttachRotation = true;
+        bbox.selectMode = InteractableSelectMode.Multiple;
     }
 
     // Applica il materiale alla bounding box
@@ -63,7 +97,7 @@ public class BoundingBoxManager : MonoBehaviour
     {
         foreach (var boundingBox in changes.added)
         {
-        OnBoundingBoxDetected(boundingBox);
+            OnBoundingBoxDetected(boundingBox);
         }
 
         foreach (var boundingBox in changes.updated)
