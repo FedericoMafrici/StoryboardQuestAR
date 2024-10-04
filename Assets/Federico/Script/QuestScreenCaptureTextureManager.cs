@@ -1,14 +1,16 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Trev3d.Quest.ScreenCapture
 {
 	[DefaultExecutionOrder(-1000)]
 	public class QuestScreenCaptureTextureManager : MonoBehaviour
 	{
-		public ConsoleDebugger _debuggingWindow;
 		
+		public ConsoleDebugger _debuggingWindow;
+		[SerializeField] public RawImage _screenshot ; // Database con la lista delle azioni per ogni oggetto
 		private AndroidJavaObject byteBuffer;
 		private unsafe sbyte* imageData;
 		private int bufferSize;
@@ -66,7 +68,7 @@ namespace Trev3d.Quest.ScreenCapture
 				}
 				bufferSize = Size.x * Size.y * 4; // RGBA_8888 format: 4 bytes per pixel
 				
-				//Debug.Log("Chiamato startScreenCaptureWithPermission con successo.");
+				
 			
 				
 			
@@ -134,6 +136,22 @@ namespace Trev3d.Quest.ScreenCapture
 			OnNewFrame.Invoke();
 		}
 
+		public void TakeScreenShot()
+		{
+			
+			Texture2D screenshotCopy = new Texture2D(screenTexture.width, screenTexture.height, TextureFormat.RGBA32, false);
+			screenshotCopy.SetPixels(screenTexture.GetPixels());
+			screenshotCopy.Apply();
+			if (flipTextureOnGPU)
+			{
+				Graphics.Blit(screenshotCopy,flipTexture,new Vector2(1,-1),Vector2.zero);
+				Graphics.CopyTexture(flipTexture, screenshotCopy);
+			}
+			// Assegna la copia alla RawImage
+			_screenshot.texture = screenshotCopy;
+
+			Debug.Log("Screenshot taken and assigned to RawImage");
+		}
 		private void ScreenCaptureStopped()
 		{
 			OnScreenCaptureStopped.Invoke();
