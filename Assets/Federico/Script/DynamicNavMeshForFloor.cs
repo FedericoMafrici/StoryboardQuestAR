@@ -87,6 +87,8 @@ public class DynamicNavMeshForFloor : MonoBehaviour
             }
         }
 
+        planeManager.enabled = false;
+
         // Se desideri rimuovere i NavMesh quando i piani vengono eliminati
         foreach (var plane in args.removed)
         {

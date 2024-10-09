@@ -16,6 +16,10 @@ public class AnimaPersonaggio : MonoBehaviour
     [Header("Personaggio ed oggetti attivi")] 
     [SerializeField] public GameObject _character;
     [SerializeField] public GameObject _interactionObject;
+    
+    [Header("Personaggio ed oggetti attivi")] 
+    [SerializeField] public PhraseGenerator phraseGenerator;
+    
     [Header("Variabili Booleane")]
     // Gestione camminata 
     [SerializeField] private bool _self;
@@ -41,6 +45,9 @@ public class AnimaPersonaggio : MonoBehaviour
         {
             Debug.Log("No parent found.");
         }
+        phraseGenerator = FindObjectOfType<PhraseGenerator>();
+        if(phraseGenerator==null)
+            Debug.LogError("Phrase Generator di Anima personaggio non trovato +"+ gameObject.name);
     }
 
     // Update is called once per frame
@@ -324,7 +331,7 @@ public class AnimaPersonaggio : MonoBehaviour
         if (action == "talk" || action == "talk to")
         {
             //TODO GENERATORE DI FRASI DA IMPLEMENTARE 
-            //phraseGenerator.StartSpeech();
+            phraseGenerator.StartSpeech();
            // SetKeyboardForDictaction(true);
          
 
@@ -344,7 +351,7 @@ public class AnimaPersonaggio : MonoBehaviour
             _simulationManager.PlayActiveCharacterAnimation(action);
 
             //TODO Genera la frase
-            // phraseGenerator.GenerateSimplePhrase(simulationManager.activeCharacter.name, simulationManager.activeCharacter.GetComponent<CharacterManager>().type, action, character.name, character.GetComponent<CharacterManager>().type, self);
+             phraseGenerator.GenerateSimplePhrase(_simulationManager.activeCharacter.name, _simulationManager.activeCharacter.GetComponent<CharacterManager>().type, action, _character.name, _character.GetComponent<CharacterManager>().type, _self);
 
             
 
@@ -487,7 +494,7 @@ public class AnimaPersonaggio : MonoBehaviour
             _simulationManager.activeCharacter.GetComponent<CharacterManager>().StopWalking();
         }
 
-        // TODO phraseGenerator.AggiornaTesto();
+         phraseGenerator.AggiornaTesto();
     }
 
   /*   

@@ -34,9 +34,15 @@ public class PlaneManager : MonoBehaviour
 
     private bool IsUnwantedPlane(PlaneClassification classification )
     {
+        if (classification == PlaneClassification.Other ||
+            classification == PlaneClassification.None)
+        {
+            return true;
+        }
+
         // Esempio di classificazione da disabilitare
-        return  classification == PlaneClassification.Seat
-            || classification== PlaneClassification.Table;
+        return classification != PlaneClassification.Seat;
+        // || classification != PlaneClassification.Table;
     }
 }
 

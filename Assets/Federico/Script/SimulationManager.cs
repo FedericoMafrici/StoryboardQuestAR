@@ -28,9 +28,9 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] List<GameObject> listaOggettiManipolabili;
     
     [SerializeField] GameObject timeSlider;
-    //[SerializeField] AnimaPersonaggio animaPersonaggio;
-    //[SerializeField] GameObject sceneMenu;
-    
+
+    [Header("Generazione Frasi ")]
+    [SerializeField] PhraseGenerator phraseGenerator;
     // sistema ad eventi per gestire il flusso dell'applicazione
     public static EventHandler<EventArgs> startStoryboarding;
     public static EventHandler<EventArgs> pauseStoryboarding;
@@ -138,8 +138,7 @@ public class SimulationManager : MonoBehaviour
     public GameObject NextPannelButton;
 
     [SerializeField] GameObject _pannelloFine;
-
-   // private PhraseGenerator phraseGenerator;
+    
     private List<string> buffer;
 
     /*public GameObject tutorial;
@@ -983,7 +982,7 @@ public void ToggleTutorial()
 
     public void GenerateCondition()
     {
-   //     GetComponent<PhraseGenerator>().GenerateConditionPhrase();
+        GetComponent<PhraseGenerator>().GenerateConditionPhrase();
     }
 
 

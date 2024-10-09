@@ -46,8 +46,8 @@ GameObject:
   - component: {fileID: 302733042894723199}
   - component: {fileID: 2580414013151353536}
   - component: {fileID: 3320890362594388745}
-  - component: {fileID: 277438987084434683}
   - component: {fileID: 337125836968605306}
+  - component: {fileID: 277438987084434683}
   - component: {fileID: 1862997330969448765}
   m_Layer: 0
   m_Name: piano
@@ -66,7 +66,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.4998462, z: 1.4998462}
+  m_LocalScale: {x: 0.8, y: 0.79991794, z: 0.79991794}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1510988195717909219}
@@ -198,29 +198,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -1, y: 0, z: -0.15}
   m_TimeToStationary: 0.5
---- !u!114 &277438987084434683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6683974226756806044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PermittedDisplacementAxes: -1
-  m_ConstrainedAxisDisplacementMode: 1
-  m_TwoHandedRotationMode: 1
-  m_AllowOneHandedScaling: 1
-  m_AllowTwoHandedScaling: 0
-  m_OneHandedScaleSpeed: 0.5
-  m_ThresholdMoveRatioForScale: 0.05
-  m_ClampScaling: 1
-  m_MinimumScaleRatio: 0.25
-  m_MaximumScaleRatio: 2
-  m_ScaleMultiplier: 0.25
 --- !u!114 &337125836968605306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +334,29 @@ MonoBehaviour:
   m_FarAttachMode: 2
   planeManager: {fileID: 0}
   snapDistanceThreshold: 1.5
+--- !u!114 &277438987084434683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6683974226756806044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PermittedDisplacementAxes: -1
+  m_ConstrainedAxisDisplacementMode: 1
+  m_TwoHandedRotationMode: 1
+  m_AllowOneHandedScaling: 1
+  m_AllowTwoHandedScaling: 0
+  m_OneHandedScaleSpeed: 0.5
+  m_ThresholdMoveRatioForScale: 0.05
+  m_ClampScaling: 1
+  m_MinimumScaleRatio: 0.25
+  m_MaximumScaleRatio: 2
+  m_ScaleMultiplier: 0.25
 --- !u!114 &1862997330969448765
 MonoBehaviour:
   m_ObjectHideFlags: 0

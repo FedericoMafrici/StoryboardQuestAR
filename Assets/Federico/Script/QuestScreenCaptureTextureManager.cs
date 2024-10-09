@@ -11,9 +11,11 @@ namespace Trev3d.Quest.ScreenCapture
 		
 		public ConsoleDebugger _debuggingWindow;
 		[SerializeField] public RawImage _screenshot ; // Database con la lista delle azioni per ogni oggetto
+		[SerializeField] public RawImage _duplicateScreen ;
 		private AndroidJavaObject byteBuffer;
 		private unsafe sbyte* imageData;
 		private int bufferSize;
+		
 		public static QuestScreenCaptureTextureManager Instance { get; private set; }
 
 		private AndroidJavaClass UnityPlayer;
@@ -95,7 +97,8 @@ namespace Trev3d.Quest.ScreenCapture
 			{
 				Debug.LogError("Errore nella chiamata a startScreenCaptureWithPermission: " + ex.Message);
 			}
-			
+
+			_duplicateScreen.texture = screenTexture;
 		}
 
 		public void StopScreenCapture()

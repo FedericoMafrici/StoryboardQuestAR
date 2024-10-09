@@ -48,13 +48,21 @@ public class BoundingBoxManager : MonoBehaviour
         // Crea un nuovo GameObject come cubo
         GameObject cube = GameObject.Instantiate(_boundingBoxPrefab);
         cube.transform.localScale = boundingBox.GetComponent<Collider>().bounds.size;
-
         // Imposta la posizione del cubo uguale a quella della bounding box
         cube.transform.position = boundingBox.transform.position;
         cube.transform.rotation = boundingBox.transform.rotation;
-        
     }
-    
+
+    public void StopDetectingBoxes()
+    {
+        foreach (var box in boundingBoxes)
+        {
+            box.GetComponent<ARBoundingBox>().enabled = false;
+        }
+        Destroy(bbManager);
+        
+       _debuggingWindow.SetText("ho distruto il bounding box manager");
+    }
     void OnDestroy()
     {
         // Rimozione dell'evento
@@ -65,24 +73,9 @@ public class BoundingBoxManager : MonoBehaviour
     private void OnBoundingBoxDetected(ARBoundingBox box)
     {
        CreateCubeFromBoundingBox(box);
-       bbManager.enabled = false;
-       bbManager.gameObject.SetActive(false);
     }
 
-    private void configureBbox(SnapToPlane bbox)
-    {
-        bbox.smoothScale = true;
-        bbox.trackScale = true;
-        bbox.trackPosition = true;
-        bbox.smoothPosition = true;
-        bbox.trackRotation = true;
-        bbox.smoothScale = true;
-        bbox.farAttachMode = InteractableFarAttachMode.Far;
-        bbox.useDynamicAttach = true;
-        bbox.matchAttachPosition = true;
-        bbox.matchAttachRotation = true;
-        bbox.selectMode = InteractableSelectMode.Multiple;
-    }
+   
 
     // Applica il materiale alla bounding box
     private void ApplyMaterialToBoundingBox(ARBoundingBox box)

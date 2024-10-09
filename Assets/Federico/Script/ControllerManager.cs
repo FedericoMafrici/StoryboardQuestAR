@@ -53,25 +53,69 @@ public class ControllerManager : MonoBehaviour
         controlli.Left.Y.performed += ctx => Ypressed(ctx);
      //   controlli.Left.Y.canceled += ctx => Yreleased(ctx);
         controlli.Left.X.performed += ctx => X(ctx);
+        
+        // Alterna lo stato del raggio e del LineRenderer tra abilitato e disabilitato
+        leftControllerRay.enabled = false;
+        rightControllerRay.enabled = false;
+        possibleInteraction = false;
+        var lr = leftXRController.GetComponent<LineRenderer>();
+        lr.enabled = false;
+
+        lr = rightXRController.GetComponent<LineRenderer>();
+        lr.enabled = false;
+      
+        GameObject rint = rightXRController.transform.Find("Near-Far Interactor").gameObject;
+        GameObject lint = leftXRController.transform.Find("Near-Far Interactor").gameObject;
+        rint.SetActive(true); 
+        lint.SetActive(false);
+        
+        
     }
     public void Ypressed(InputAction.CallbackContext ctx)
     {
         Debug.Log("Y button pressed");
-        possibleInteraction = true;
 
-        // Alterna lo stato del raggio e del LineRenderer tra abilitato e disabilitato
-        leftControllerRay.enabled = !leftControllerRay.enabled;
-        rightControllerRay.enabled = !rightControllerRay.enabled;
-
-        var lr = leftXRController.GetComponent<LineRenderer>();
-        lr.enabled = !lr.enabled;
-
-        lr = rightXRController.GetComponent<LineRenderer>();
-        lr.enabled = !lr.enabled;
-
-      //  StartCoroutine(CaptureScreenshot());  // Avvia la coroutine per lo screenshot
+        if (possibleInteraction)
+        {
+            DeactivateLaser();
+        }
+        else
+        {
+            ActivateLaser();
+        }
     }
+     void X(InputAction.CallbackContext ctx)
+                      {
+                        
+                          if (leftControllerRay == null)
+                          {
+                              Debug.LogError("controller sinistro non trovato");
+                          }
 
+
+                          if (leftControllerRay.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo) && _SimulationManager.status == 0 )
+                          {
+                              if (hitInfo.transform.gameObject.layer==9)
+                              {
+                                  Destroy(hitInfo.transform.gameObject);
+                              }
+                              else
+                              {
+                                  SpawnObject();
+                              }
+                          }
+                          else if (_SimulationManager.status == 1 )
+                              {
+                                  var activeChar = _SimulationManager.activeCharacter.GetComponent<CharacterManager>();
+                                  if (activeChar.walkMode)
+                                  {
+                                      activeChar.Move(hitInfo);
+                                  }
+                              }
+                          
+                  
+                          return;
+                      }
     private IEnumerator CaptureScreenshot()
     {
         yield return new WaitForEndOfFrame();  // Aspetta la fine del frame per assicurarsi che il rendering sia completato
@@ -100,34 +144,7 @@ public class ControllerManager : MonoBehaviour
         _ConsoleDebugger.AddText("Screenshot visualizzato sulla UI: " + _screenshot.name);
     }
         
-       void X(InputAction.CallbackContext ctx)
-                  {
-                    
-                      if (leftControllerRay == null)
-                      {
-                          Debug.LogError("controller sinistro non trovato");
-                      }
-              
-                     
-                      if (leftControllerRay.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo))
-                      {
-              
-                          if (_SimulationManager.status == 0)
-                          {
-                              SpawnObject();
-                          }
-                          else if (_SimulationManager.status == 1 )
-                          {
-                              var activeChar = _SimulationManager.activeCharacter.GetComponent<CharacterManager>();
-                              if (activeChar.walkMode)
-                              {
-                                  activeChar.Move(hitInfo);
-                              }
-                          }
-                      }
-              
-                      return;
-                  }
+      
         private void Update()
             {
              
@@ -209,28 +226,40 @@ public class ControllerManager : MonoBehaviour
         // Alterna lo stato del raggio e del LineRenderer tra abilitato e disabilitato
         leftControllerRay.enabled = true;
         rightControllerRay.enabled = true;
-
+        /*
         var lr = leftXRController.GetComponent<LineRenderer>();
         lr.enabled = true;
 
         lr = rightXRController.GetComponent<LineRenderer>();
         lr.enabled = true;
+        */
+        GameObject rint = rightXRController.transform.Find("Near-Far Interactor").gameObject;
+        GameObject lint = leftXRController.transform.Find("Near-Far Interactor").gameObject;
+        rint.SetActive(false); 
+        lint.SetActive(false);
+
     }
 
     public void DeactivateLaser()
     {
         Debug.Log("Y button pressed");
-        possibleInteraction = true;
+        possibleInteraction = false;
 
         // Alterna lo stato del raggio e del LineRenderer tra abilitato e disabilitato
         leftControllerRay.enabled = false;
         rightControllerRay.enabled = false;
-
+        /*
         var lr = leftXRController.GetComponent<LineRenderer>();
         lr.enabled = false;
 
         lr = rightXRController.GetComponent<LineRenderer>();
         lr.enabled = false;
+        */
+        GameObject rint = rightXRController.transform.Find("Near-Far Interactor").gameObject;
+        GameObject lint = leftXRController.transform.Find("Near-Far Interactor").gameObject;
+       
+        rint.SetActive(true); 
+        lint.SetActive(true);
     }
     
     
